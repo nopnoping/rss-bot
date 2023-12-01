@@ -12,7 +12,9 @@ type FeedItem struct {
 	date        string
 }
 
+var parseMap map[string]parse
+
 type parse interface {
-	GetChannel()
-	GetItem()
+	GetChannel() *FeedChannel
+	GetItem() []*FeedItem
 }
