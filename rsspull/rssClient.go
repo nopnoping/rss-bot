@@ -19,7 +19,7 @@ func (c *rssClient) get(url string) ([]byte, error) {
 	}
 
 	// Add Header
-	request.Header.Add("", "")
+	//request.Header.Add("", "")
 
 	// Send request
 	response, err := c.client.Do(request)

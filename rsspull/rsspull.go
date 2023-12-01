@@ -1,6 +1,7 @@
 package rsspull
 
 type RssPull struct {
+	client *rssClient
 }
 
 func NewRssPull() *RssPull {
