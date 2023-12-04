@@ -33,7 +33,7 @@ func TestRssJson(t *testing.T) {
 }
 `)
 
-	feed := parseFeed(data, "json")
+	feed, _ := parseFeed(data, "json")
 	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
 	for _, i := range feed.Items {
 		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
@@ -72,7 +72,7 @@ func TestAtomJson(t *testing.T) {
   }
 }
 `)
-	feed := parseFeed(data, "json")
+	feed, _ := parseFeed(data, "json")
 	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
 	for _, i := range feed.Items {
 		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
