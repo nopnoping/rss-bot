@@ -18,8 +18,11 @@ func (r rssV2_0) Parse(root *etree.Element) *FeedInfo {
 		if title := channel.SelectElement("title"); title != nil {
 			feed.Channel.Title = title.Text()
 		}
-		if link := channel.SelectElement("link"); link != nil {
-			feed.Channel.Link = link.Text()
+		// Patch: it sometimes has extra atom link element, We should pass it
+		for _, link := range channel.SelectElements("link") {
+			if link.Space == "" {
+				feed.Channel.Link = link.Text()
+			}
 		}
 		for _, i := range channel.SelectElements("item") {
 			item := &FeedItem{}

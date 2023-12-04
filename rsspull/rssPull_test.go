@@ -16,7 +16,7 @@ func TestAtomPull(t *testing.T) {
 
 func TestRSSPull(t *testing.T) {
 	pull := NewRssPull()
-	feed, _ := pull.Pull("https://sspai.com/feed")
+	feed, _ := pull.Pull("https://feeds.appinn.com/appinns/")
 	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
 	for _, i := range feed.Items {
 		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
