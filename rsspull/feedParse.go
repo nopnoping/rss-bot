@@ -69,6 +69,7 @@ func parseXML(data []byte) *parse.FeedInfo {
 	var ok bool
 	if p, ok = parse.ParserMap[key]; !ok {
 		log.Fatalf("Parse Feed err, No matched parser!. key:%s\n", key)
+		return nil
 	}
 	return p.Parse(root)
 }
