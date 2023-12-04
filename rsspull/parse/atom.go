@@ -18,13 +18,19 @@ func atomParseTemp(root *etree.Element, attr *parseTempAttr) *FeedInfo {
 	if element := root.SelectElement(attr.title); element != nil {
 		feed.Channel.Title = element.Text()
 	}
-	if link := root.SelectElement(attr.link); link != nil {
+
+	for _, link := range root.SelectElements(attr.link) {
+		href := ""
 		for _, attr := range link.Attr {
+			if attr.Key == "rel" && attr.Value == "self" {
+				continue
+			}
 			if attr.Key == "href" {
 				// todo: relative
-				feed.Channel.Link = attr.Value
+				href = attr.Value
 			}
 		}
+		feed.Channel.Link = href
 	}
 
 	for _, entry := range root.SelectElements(attr.item) {
