@@ -1,6 +1,7 @@
 package rsspull
 
 import (
+	"encoding/json"
 	"github.com/beevik/etree"
 	"log"
 	"rssbot/rsspull/parse"
@@ -75,5 +76,76 @@ func parseXML(data []byte) *parse.FeedInfo {
 }
 
 func parseJson(data []byte) *parse.FeedInfo {
-	return nil
+	feed := &parse.FeedInfo{
+		Channel: &parse.FeedChannel{},
+		Items:   make([]*parse.FeedItem, 0),
+	}
+	var temp map[string]interface{}
+	if err := json.Unmarshal(data, &temp); err != nil {
+		log.Fatalf("Deserialized err:%v\n", err)
+		return nil
+	}
+
+	if _, ok := temp["rss"]; ok {
+		parseRSSJson(temp, feed)
+	} else if _, ok := temp["feed"]; ok {
+		parseAtomJson(temp, feed)
+	} else {
+		log.Fatalf("Unsupported json format.")
+	}
+
+	return feed
+}
+
+func parseRSSJson(temp map[string]interface{}, feed *parse.FeedInfo) {
+	for k, v := range temp["rss"].(map[string]interface{}) {
+		if k == "channel" {
+			for k1, v1 := range v.(map[string]interface{}) {
+				switch k1 {
+				case "title":
+					feed.Channel.Title = v1.(string)
+				case "link":
+					feed.Channel.Link = v1.(string)
+				case "items":
+					for _, v2 := range v1.([]interface{}) {
+						t := v2.(map[string]interface{})
+						item := &parse.FeedItem{
+							Title:   t["title"].(string),
+							Link:    t["link"].(string),
+							PubDate: t["pubDate"].(string),
+						}
+						feed.Items = append(feed.Items, item)
+					}
+				}
+			}
+		}
+	}
+}
+
+func parseAtomJson(temp map[string]interface{}, feed *parse.FeedInfo) {
+	for k, v := range temp["feed"].(map[string]interface{}) {
+		switch k {
+		case "title":
+			feed.Channel.Title = v.(string)
+		case "link":
+			for _, v1 := range v.([]interface{}) {
+				t := v1.(map[string]interface{})
+				if val, ok := t["rel"]; ok && val == "self" {
+					continue
+				}
+				feed.Channel.Link = t["href"].(string)
+				break
+			}
+		case "entry":
+			for _, v2 := range v.([]interface{}) {
+				t := v2.(map[string]interface{})
+				item := &parse.FeedItem{
+					Title:   t["title"].(string),
+					Link:    t["link"].([]interface{})[0].(map[string]interface{})["href"].(string),
+					PubDate: t["updated"].(string),
+				}
+				feed.Items = append(feed.Items, item)
+			}
+		}
+	}
 }
