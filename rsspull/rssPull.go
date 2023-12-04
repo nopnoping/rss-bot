@@ -21,10 +21,15 @@ func NewRssPull() *RssPull {
 	}
 }
 
-func (r *RssPull) Pull(url string) (feed *parse.FeedInfo) {
-	body, header, _ := r.client.get(url)
-	if strings.Contains(header.Get("Content-Type"), "xml") {
+func (r *RssPull) Pull(url string) (feed *parse.FeedInfo, err error) {
+	body, header, err := r.client.get(url)
+	if err != nil {
+		return
+	}
+	if strings.Contains(header.Get("Content-Type"), "json") || strings.HasSuffix(url, "json") {
+		feed = parseFeed(body, "json")
+	} else {
 		feed = parseFeed(body, "xml")
 	}
-	return feed
+	return
 }

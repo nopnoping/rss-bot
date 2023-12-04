@@ -7,7 +7,7 @@ import (
 
 func TestAtomPull(t *testing.T) {
 	pull := NewRssPull()
-	feed := pull.Pull("https://www.ruanyifeng.com/blog/atom.xml")
+	feed, _ := pull.Pull("https://www.ruanyifeng.com/blog/atom.xml")
 	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
 	for _, i := range feed.Items {
 		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
@@ -16,7 +16,7 @@ func TestAtomPull(t *testing.T) {
 
 func TestRSSPull(t *testing.T) {
 	pull := NewRssPull()
-	feed := pull.Pull("https://sspai.com/feed")
+	feed, _ := pull.Pull("https://sspai.com/feed")
 	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
 	for _, i := range feed.Items {
 		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
