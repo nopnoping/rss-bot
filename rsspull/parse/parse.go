@@ -1,20 +1,25 @@
 package parse
 
+import "github.com/beevik/etree"
+
+type FeedInfo struct {
+	channel *FeedChannel
+	items   []*FeedItem
+}
+
 type FeedChannel struct {
 	title string
 	link  string
 }
 
 type FeedItem struct {
-	title       string
-	link        string
-	description string
-	date        string
+	title   string
+	link    string
+	pubDate string
 }
 
-var parseMap map[string]parse
+var ParserMap = make(map[string]Parser)
 
-type parse interface {
-	GetChannel() *FeedChannel
-	GetItem() []*FeedItem
+type Parser interface {
+	Parse(root *etree.Element) *FeedInfo
 }
