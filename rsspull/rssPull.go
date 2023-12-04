@@ -1,6 +1,7 @@
 package rsspull
 
 import (
+	"log"
 	"net/http"
 	"rssbot/rsspull/parse"
 	"strings"
@@ -21,15 +22,23 @@ func NewRssPull() *RssPull {
 	}
 }
 
-func (r *RssPull) Pull(url string) (feed *parse.FeedInfo, err error) {
+func (r *RssPull) Pull(url string) *parse.FeedInfo {
+	var feed *parse.FeedInfo
 	body, header, err := r.client.get(url)
 	if err != nil {
-		return
+		log.Printf("Rss Pull get err:%v\n", err)
+		return nil
 	}
 	if strings.Contains(header.Get("Content-Type"), "json") || strings.HasSuffix(url, "json") {
-		feed = parseFeed(body, "json")
+		if feed, err = parseFeed(body, "json"); err != nil {
+			log.Printf("parse json feed error:%v\n", err)
+			return nil
+		}
 	} else {
-		feed = parseFeed(body, "xml")
+		if feed, err = parseFeed(body, "xml"); err != nil {
+			log.Printf("parse xml feed error:%v\n", err)
+			return nil
+		}
 	}
-	return
+	return feed
 }

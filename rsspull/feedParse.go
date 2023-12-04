@@ -2,6 +2,7 @@ package rsspull
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/beevik/etree"
 	"log"
 	"rssbot/rsspull/parse"
@@ -10,28 +11,28 @@ import (
 
 // The format of data could be json/xml
 // if format is empty, it will judge data format by prefix
-func parseFeed(data []byte, format string) *parse.FeedInfo {
+func parseFeed(data []byte, format string) (*parse.FeedInfo, error) {
 	switch format {
 	case "xml":
 		return parseXML(data)
 	case "json":
 		return parseJson(data)
 	default:
-		return nil
+		return nil, nil
 	}
 }
 
-func parseXML(data []byte) *parse.FeedInfo {
+func parseXML(data []byte) (*parse.FeedInfo, error) {
 	doc := etree.NewDocument()
 	if err := doc.ReadFromBytes(data); err != nil {
-		log.Fatalf("Doc Read bytes err:%v", err)
-		return nil
+		log.Printf("Doc Read bytes err:%v\n", err)
+		return nil, err
 	}
 
 	root := doc.Root()
 	if root == nil {
-		log.Fatal("Parse Feed err, Don't find root element!")
-		return nil
+		log.Println("Parse Feed err, Don't find root element!")
+		return nil, errors.New("not xml format data")
 	}
 
 	key := ""
@@ -62,42 +63,52 @@ func parseXML(data []byte) *parse.FeedInfo {
 			}
 		}
 	default:
-		log.Fatalf("Parse Feed err, No matched Root Tag!. tag:%s\n", root.Tag)
-		return nil
+		log.Printf("Parse Feed err, No matched Root Tag!. tag:%s\n", root.Tag)
+		return nil, errors.New("unsupported version")
 	}
 
 	var p parse.Parser
 	var ok bool
 	if p, ok = parse.ParserMap[key]; !ok {
-		log.Fatalf("Parse Feed err, No matched parser!. key:%s\n", key)
-		return nil
+		log.Printf("Parse Feed err, No matched parser!. key:%s\n", key)
+		return nil, errors.New("unsupported version")
 	}
-	return p.Parse(root)
+	return p.Parse(root), nil
 }
 
-func parseJson(data []byte) *parse.FeedInfo {
+func parseJson(data []byte) (*parse.FeedInfo, error) {
 	feed := &parse.FeedInfo{
 		Channel: &parse.FeedChannel{},
 		Items:   make([]*parse.FeedItem, 0),
 	}
 	var temp map[string]interface{}
 	if err := json.Unmarshal(data, &temp); err != nil {
-		log.Fatalf("Deserialized err:%v\n", err)
-		return nil
+		log.Printf("Deserialized err:%v\n", err)
+		return nil, err
 	}
 
 	if _, ok := temp["rss"]; ok {
-		parseRSSJson(temp, feed)
+		if err := parseRSSJson(temp, feed); err != nil {
+			return nil, err
+		}
 	} else if _, ok := temp["feed"]; ok {
-		parseAtomJson(temp, feed)
+		if err := parseAtomJson(temp, feed); err != nil {
+			return nil, err
+		}
 	} else {
-		log.Fatalf("Unsupported json format.")
+		log.Println("Unsupported json format.")
+		return nil, errors.New("unsupported json format")
 	}
 
-	return feed
+	return feed, nil
 }
 
-func parseRSSJson(temp map[string]interface{}, feed *parse.FeedInfo) {
+func parseRSSJson(temp map[string]interface{}, feed *parse.FeedInfo) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = errors.New("parse format error")
+		}
+	}()
 	for k, v := range temp["rss"].(map[string]interface{}) {
 		if k == "channel" {
 			for k1, v1 := range v.(map[string]interface{}) {
@@ -120,9 +131,15 @@ func parseRSSJson(temp map[string]interface{}, feed *parse.FeedInfo) {
 			}
 		}
 	}
+	return
 }
 
-func parseAtomJson(temp map[string]interface{}, feed *parse.FeedInfo) {
+func parseAtomJson(temp map[string]interface{}, feed *parse.FeedInfo) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = errors.New("parse format error")
+		}
+	}()
 	for k, v := range temp["feed"].(map[string]interface{}) {
 		switch k {
 		case "title":
@@ -148,4 +165,5 @@ func parseAtomJson(temp map[string]interface{}, feed *parse.FeedInfo) {
 			}
 		}
 	}
+	return
 }
