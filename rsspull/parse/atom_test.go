@@ -9,8 +9,8 @@ import (
 var atomV0_3_Data = `<?xml version="1.0" encoding="utf-8"?>
 <feed version="0.3" 
       xmlns="http://purl.org/atom/ns#" >
-  <title>atom_0.3.feed.title</title>
-  <link rel="alternate" type="atom_0.3.feed.link^type" href="atom_0.3.feed.link^href"/>
+  <Title>atom_0.3.feed.Title</Title>
+  <Link rel="alternate" type="atom_0.3.feed.Link^type" href="atom_0.3.feed.Link^href"/>
   <author>
     <name>atom_0.3.feed.author.name</name>
     <url>atom_0.3.feed.author.url</url>
@@ -28,9 +28,9 @@ var atomV0_3_Data = `<?xml version="1.0" encoding="utf-8"?>
   <info type="atom_0.3.feed.info^type" mode="xml">atom_0.3.feed.info</info>
   <modified>2000-01-01T00:00:00Z</modified>
   <entry>
-    <title>atom_0.3.feed.entry[0].title</title>
-    <link rel="alternate" type="atom_0.3.feed.entry[0].link^type"
-          href="atom_0.3.feed.entry[0].link^href"/>
+    <Title>atom_0.3.feed.entry[0].Title</Title>
+    <Link rel="alternate" type="atom_0.3.feed.entry[0].Link^type"
+          href="atom_0.3.feed.entry[0].Link^href"/>
     <id>atom_0.3.feed.entry[0]^id</id>
     <author>
       <name>atom_0.3.feed.entry[0].author.name</name>
@@ -50,9 +50,9 @@ var atomV0_3_Data = `<?xml version="1.0" encoding="utf-8"?>
     <content type="atom_0.3.feed.entry[0].content[1]^type" mode="xml">atom_0.3.feed.entry[0].content[1]</content>
   </entry>
     <entry>
-      <title>atom_0.3.feed.entry[1].title</title>
-      <link rel="alternate" type="atom_0.3.feed.entry[1].link^type"
-            href="atom_0.3.feed.entry[1].link^href"/>
+      <Title>atom_0.3.feed.entry[1].Title</Title>
+      <Link rel="alternate" type="atom_0.3.feed.entry[1].Link^type"
+            href="atom_0.3.feed.entry[1].Link^href"/>
       <id>atom_0.3.feed.entry[1]^id</id>
       <author>
         <name>atom_0.3.feed.entry[1].author.name</name>
@@ -77,10 +77,10 @@ var atomV0_3_Data = `<?xml version="1.0" encoding="utf-8"?>
 var atomV1_0_Data = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns='http://www.w3.org/2005/Atom' 
       xml:lang='en-us'>
-  <title type="html">atom_1.0.feed.title</title>
-  <link rel="self" type="text/html" href="http://example.com/blog/atom_1.0.xml"/>
-  <link rel="alternate" type="text/html" href="http://example.com/blog"/>
-  <link rel="alternate" type="text/plain" href="http://example.com/blog_plain"/>
+  <Title type="html">atom_1.0.feed.Title</Title>
+  <Link rel="self" type="text/html" href="http://example.com/blog/atom_1.0.xml"/>
+  <Link rel="alternate" type="text/html" href="http://example.com/blog"/>
+  <Link rel="alternate" type="text/plain" href="http://example.com/blog_plain"/>
   <author>
     <name>atom_1.0.feed.author.name</name>
     <uri>http://example.com</uri>
@@ -97,14 +97,14 @@ var atomV1_0_Data = `<?xml version="1.0" encoding="utf-8"?>
 <rights>atom_1.0.feed.copyright</rights>
   <updated>2000-01-01T00:00:00Z</updated>
   <entry>
-    <title type="text">atom_1.0.feed.entry[0].title</title>
-    <link rel="alternate" type="text/html"
+    <Title type="text">atom_1.0.feed.entry[0].Title</Title>
+    <Link rel="alternate" type="text/html"
           href="http://example.com/blog/entry1"/>
-    <link rel="alternate" type="text/plain"
+    <Link rel="alternate" type="text/plain"
           href="http://example.com/blog/entry1_plain"/>
-	<link rel="enclosure" type="image/gif"
+	<Link rel="enclosure" type="image/gif"
           href="http://example.com/blog/enclosure1.gif"/>
-	<link rel="test" type="image/gif"
+	<Link rel="test" type="image/gif"
           href="tag:example.com,2005:Atom-Tests:xml-base:Test0"/>
     <id>atom_1.0.feed.entry[0]^id</id>
     <author>
@@ -124,12 +124,12 @@ var atomV1_0_Data = `<?xml version="1.0" encoding="utf-8"?>
 	<rights>atom_1.0.feed.entry[0].rights</rights>
   </entry>
     <entry>
-      <title type="text">atom_1.0.feed.entry[1].title</title>
-      <link rel="alternate" type="text/html"
+      <Title type="text">atom_1.0.feed.entry[1].Title</Title>
+      <Link rel="alternate" type="text/html"
             href="http://example.com/blog/entry2"/>
-      <link rel="enclosure" type="image/gif"
+      <Link rel="enclosure" type="image/gif"
 	        href="http://example.com/blog/enclosure2.gif"/>
-	<link rel="test" type="image/gif"
+	<Link rel="test" type="image/gif"
           href="tag:example.com,2005:Atom-Tests:xml-base:Test1"/>
       <id>atom_1.0.feed.entry[1]^id</id>
       <author>
@@ -159,9 +159,9 @@ func TestAtomV0_3(t *testing.T) {
 
 	parser := atomV0_3{}
 	feed := parser.Parse(doc.Root())
-	log.Println(feed.channel.title, " ", feed.channel.link)
-	for _, i := range feed.items {
-		log.Println(i.title, " ", i.link, " ", i.pubDate)
+	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
+	for _, i := range feed.Items {
+		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
 	}
 }
 
@@ -174,8 +174,8 @@ func TestAtomV1_0(t *testing.T) {
 
 	parser := atomV1_0{}
 	feed := parser.Parse(doc.Root())
-	log.Println(feed.channel.title, " ", feed.channel.link)
-	for _, i := range feed.items {
-		log.Println(i.title, " ", i.link, " ", i.pubDate)
+	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
+	for _, i := range feed.Items {
+		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
 	}
 }

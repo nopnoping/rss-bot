@@ -10,29 +10,29 @@ var _ Parser = (*rssV2_0)(nil)
 
 func (r rssV2_0) Parse(root *etree.Element) *FeedInfo {
 	feed := &FeedInfo{
-		channel: &FeedChannel{},
-		items:   make([]*FeedItem, 0),
+		Channel: &FeedChannel{},
+		Items:   make([]*FeedItem, 0),
 	}
 
 	if channel := root.SelectElement("channel"); channel != nil {
 		if title := channel.SelectElement("title"); title != nil {
-			feed.channel.title = title.Text()
+			feed.Channel.Title = title.Text()
 		}
 		if link := channel.SelectElement("link"); link != nil {
-			feed.channel.link = link.Text()
+			feed.Channel.Link = link.Text()
 		}
 		for _, i := range channel.SelectElements("item") {
 			item := &FeedItem{}
 			if title := i.SelectElement("title"); title != nil {
-				item.title = title.Text()
+				item.Title = title.Text()
 			}
 			if link := i.SelectElement("link"); link != nil {
-				item.link = link.Text()
+				item.Link = link.Text()
 			}
 			if pubDate := i.SelectElement("pubDate"); pubDate != nil {
-				item.pubDate = pubDate.Text()
+				item.PubDate = pubDate.Text()
 			}
-			feed.items = append(feed.items, item)
+			feed.Items = append(feed.Items, item)
 		}
 	}
 
@@ -45,31 +45,31 @@ var _ Parser = (*rssV1_0)(nil)
 
 func (r rssV1_0) Parse(root *etree.Element) *FeedInfo {
 	feed := &FeedInfo{
-		channel: &FeedChannel{},
-		items:   make([]*FeedItem, 0),
+		Channel: &FeedChannel{},
+		Items:   make([]*FeedItem, 0),
 	}
 
 	if channel := root.SelectElement("channel"); channel != nil {
-		if title := channel.SelectElement("title"); title != nil {
-			feed.channel.title = title.Text()
+		if title := channel.SelectElement("Title"); title != nil {
+			feed.Channel.Title = title.Text()
 		}
-		if link := channel.SelectElement("link"); link != nil {
-			feed.channel.link = link.Text()
+		if link := channel.SelectElement("Link"); link != nil {
+			feed.Channel.Link = link.Text()
 		}
 	}
 
 	for _, i := range root.SelectElements("item") {
 		item := &FeedItem{}
 		if title := i.SelectElement("title"); title != nil {
-			item.title = title.Text()
+			item.Title = title.Text()
 		}
 		if link := i.SelectElement("link"); link != nil {
-			item.link = link.Text()
+			item.Link = link.Text()
 		}
 		if pubDate := i.SelectElement("dc:date"); pubDate != nil {
-			item.pubDate = pubDate.Text()
+			item.PubDate = pubDate.Text()
 		}
-		feed.items = append(feed.items, item)
+		feed.Items = append(feed.Items, item)
 	}
 
 	return feed

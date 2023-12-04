@@ -8,6 +8,6 @@ import (
 
 func TestGet(t *testing.T) {
 	client := &rssClient{client: &http.Client{}}
-	r, _, _ := client.get("http://www.baidu.com")
+	r, _, _ := client.get("https://sspai.com/feed")
 	log.Println((string)(r))
 }

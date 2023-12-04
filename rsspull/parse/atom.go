@@ -11,18 +11,18 @@ type parseTempAttr struct {
 
 func atomParseTemp(root *etree.Element, attr *parseTempAttr) *FeedInfo {
 	feed := &FeedInfo{
-		channel: &FeedChannel{},
-		items:   make([]*FeedItem, 0),
+		Channel: &FeedChannel{},
+		Items:   make([]*FeedItem, 0),
 	}
 
 	if element := root.SelectElement(attr.title); element != nil {
-		feed.channel.title = element.Text()
+		feed.Channel.Title = element.Text()
 	}
 	if link := root.SelectElement(attr.link); link != nil {
 		for _, attr := range link.Attr {
 			if attr.Key == "href" {
 				// todo: relative
-				feed.channel.link = attr.Value
+				feed.Channel.Link = attr.Value
 			}
 		}
 	}
@@ -30,21 +30,21 @@ func atomParseTemp(root *etree.Element, attr *parseTempAttr) *FeedInfo {
 	for _, entry := range root.SelectElements(attr.item) {
 		item := &FeedItem{}
 		if element := entry.SelectElement(attr.itemTitle); element != nil {
-			item.title = element.Text()
+			item.Title = element.Text()
 		}
 		if link := entry.SelectElement(attr.itemLink); link != nil {
 			for _, attr := range link.Attr {
 				if attr.Key == "href" {
 					// todo: relative
-					item.link = attr.Value
+					item.Link = attr.Value
 				}
 			}
 		}
 		if date := entry.SelectElement(attr.itemUpdate); date != nil {
 			// todo: format
-			item.pubDate = date.Text()
+			item.PubDate = date.Text()
 		}
-		feed.items = append(feed.items, item)
+		feed.Items = append(feed.Items, item)
 	}
 	return feed
 }

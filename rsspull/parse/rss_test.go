@@ -10,75 +10,75 @@ var rssV2_0_Data = `
 <?xml version="1.0"?>
 <rss version="2.0" 
     xmlns:content='http://purl.org/rss/1.0/modules/content/'>
-    <channel>
-        <title>rss_2.0.channel.title</title>
-        <link>rss_2.0.channel.link</link>
-        <description>rss_2.0.channel.description</description>
-        <language>rss_2.0.channel.language</language>
-        <rating>rss_2.0.channel.rating</rating>
-        <copyright>rss_2.0.channel.copyright</copyright>
-        <pubDate> Mon, 01 Jan 2001 00:00:00 GMT
-        </pubDate>
+    <Channel>
+        <Title>rss_2.0.Channel.Title</Title>
+        <Link>rss_2.0.Channel.Link</Link>
+        <description>rss_2.0.Channel.description</description>
+        <language>rss_2.0.Channel.language</language>
+        <rating>rss_2.0.Channel.rating</rating>
+        <copyright>rss_2.0.Channel.copyright</copyright>
+        <PubDate> Mon, 01 Jan 2001 00:00:00 GMT
+        </PubDate>
         <lastBuildDate>Mon, 01 Jan 2001 01:00:00 GMT</lastBuildDate>
-        <docs>rss_2.0.channel.docs</docs>
-        <managingEditor>rss_2.0.channel.managingEditor</managingEditor>
-        <webMaster>rss_2.0.channel.webMaster</webMaster>
-        <category domain="rss_2.0.channel.category[0]^domain">rss_2.0.channel.category[0]</category>
-        <category domain="rss_2.0.channel.category[1]^domain">rss_2.0.channel.category[1]</category>
-        <generator>rss_2.0.channel.generator</generator>
+        <docs>rss_2.0.Channel.docs</docs>
+        <managingEditor>rss_2.0.Channel.managingEditor</managingEditor>
+        <webMaster>rss_2.0.Channel.webMaster</webMaster>
+        <category domain="rss_2.0.Channel.category[0]^domain">rss_2.0.Channel.category[0]</category>
+        <category domain="rss_2.0.Channel.category[1]^domain">rss_2.0.Channel.category[1]</category>
+        <generator>rss_2.0.Channel.generator</generator>
         <ttl>100</ttl>
 
         <image>
-            <title>rss_2.0.channel.image.title</title>
-            <url>rss_2.0.channel.image.url</url>
-            <link>rss_2.0.channel.image.link</link>
+            <Title>rss_2.0.Channel.image.Title</Title>
+            <url>rss_2.0.Channel.image.url</url>
+            <Link>rss_2.0.Channel.image.Link</Link>
             <width>100</width>
             <height>200</height>
-            <description>rss_2.0.channel.image.description</description>
+            <description>rss_2.0.Channel.image.description</description>
         </image>
 
         <item>
-            <title>rss_2.0.channel.item[0].title</title>
-            <description>rss_2.0.channel.item[0].description</description>
-            <link>rss_2.0.channel.item[0].link</link>
-            <source url="rss_2.0.channel.item[0].source^url">rss_2.0.channel.item[0].source</source>
-            <enclosure url="rss_2.0.channel.item[0].enclousure[0]^url" length="100"
-                       type="rss_2.0.channel.item[0].enclousure[0]^type"/>
-            <enclosure url="rss_2.0.channel.item[0].enclousure[1]^url" length="100"
-                       type="rss_2.0.channel.item[0].enclousure[1]^type"/>
-            <category domain="rss_2.0.channel.item[0].category[0]^domain">rss_2.0.channel.item[0].category[0]</category>
-            <category domain="rss_2.0.channel.item[0].category[1]^domain">rss_2.0.channel.item[0].category[1]</category>
-            <pubDate>Mon, 01 Jan 2001 00:00:00 GMT</pubDate>
+            <Title>rss_2.0.Channel.item[0].Title</Title>
+            <description>rss_2.0.Channel.item[0].description</description>
+            <Link>rss_2.0.Channel.item[0].Link</Link>
+            <source url="rss_2.0.Channel.item[0].source^url">rss_2.0.Channel.item[0].source</source>
+            <enclosure url="rss_2.0.Channel.item[0].enclousure[0]^url" length="100"
+                       type="rss_2.0.Channel.item[0].enclousure[0]^type"/>
+            <enclosure url="rss_2.0.Channel.item[0].enclousure[1]^url" length="100"
+                       type="rss_2.0.Channel.item[0].enclousure[1]^type"/>
+            <category domain="rss_2.0.Channel.item[0].category[0]^domain">rss_2.0.Channel.item[0].category[0]</category>
+            <category domain="rss_2.0.Channel.item[0].category[1]^domain">rss_2.0.Channel.item[0].category[1]</category>
+            <PubDate>Mon, 01 Jan 2001 00:00:00 GMT</PubDate>
             <expirationDate>Mon, 01 Jan 2001 01:00:00 GMT</expirationDate>
-            <author>rss_2.0.channel.item[0].author</author>
-            <comments>rss_2.0.channel.item[0].comments</comments>
-            <guid isPermaLink="true">rss_2.0.channel.item[0].guid</guid>
-            <content:encoded>rss_2.0.channel.item[0].content</content:encoded>
+            <author>rss_2.0.Channel.item[0].author</author>
+            <comments>rss_2.0.Channel.item[0].comments</comments>
+            <guid isPermaLink="true">rss_2.0.Channel.item[0].guid</guid>
+            <content:encoded>rss_2.0.Channel.item[0].content</content:encoded>
         </item>
         <item>
-            <title>rss_2.0.channel.item[1].title</title>
-            <description>rss_2.0.channel.item[1].description</description>
-            <link>rss_2.0.channel.item[1].link</link>
-            <source url="rss_2.0.channel.item[1].source^url">rss_2.0.channel.item[1].source</source>
-            <enclosure url="rss_2.0.channel.item[1].enclousure[0]^url" length="100"
-                       type="rss_2.0.channel.item[1].enclousure[0]^type"/>
-            <enclosure url="rss_2.0.channel.item[1].enclousure[1]^url" length="100"
-                       type="rss_2.0.channel.item[1].enclousure[1]^type"/>
-            <category domain="rss_2.0.channel.item[1].category[0]^domain">rss_2.0.channel.item[1].category[0]</category>
-            <category domain="rss_2.0.channel.item[1].category[1]^domain">rss_2.0.channel.item[1].category[1]</category>
-            <pubDate>Mon, 02 Jan 2001 00:00:00 GMT</pubDate>
+            <Title>rss_2.0.Channel.item[1].Title</Title>
+            <description>rss_2.0.Channel.item[1].description</description>
+            <Link>rss_2.0.Channel.item[1].Link</Link>
+            <source url="rss_2.0.Channel.item[1].source^url">rss_2.0.Channel.item[1].source</source>
+            <enclosure url="rss_2.0.Channel.item[1].enclousure[0]^url" length="100"
+                       type="rss_2.0.Channel.item[1].enclousure[0]^type"/>
+            <enclosure url="rss_2.0.Channel.item[1].enclousure[1]^url" length="100"
+                       type="rss_2.0.Channel.item[1].enclousure[1]^type"/>
+            <category domain="rss_2.0.Channel.item[1].category[0]^domain">rss_2.0.Channel.item[1].category[0]</category>
+            <category domain="rss_2.0.Channel.item[1].category[1]^domain">rss_2.0.Channel.item[1].category[1]</category>
+            <PubDate>Mon, 02 Jan 2001 00:00:00 GMT</PubDate>
             <expirationDate>Mon, 01 Jan 2001 01:00:00 GMT</expirationDate>
-            <author>rss_2.0.channel.item[1].author</author>
-            <comments>rss_2.0.channel.item[1].comments</comments>
-            <guid isPermaLink="false">rss_2.0.channel.item[1].guid</guid>
-            <content:encoded>rss_2.0.channel.item[1].content</content:encoded>
+            <author>rss_2.0.Channel.item[1].author</author>
+            <comments>rss_2.0.Channel.item[1].comments</comments>
+            <guid isPermaLink="false">rss_2.0.Channel.item[1].guid</guid>
+            <content:encoded>rss_2.0.Channel.item[1].content</content:encoded>
         </item>
 
         <textInput>
-            <title>rss_2.0.channel.textInput.title</title>
-            <description>rss_2.0.channel.textInput.description</description>
-            <name>rss_2.0.channel.textInput.name</name>
-            <link>rss_2.0.channel.textInput.link</link>
+            <Title>rss_2.0.Channel.textInput.Title</Title>
+            <description>rss_2.0.Channel.textInput.description</description>
+            <name>rss_2.0.Channel.textInput.name</name>
+            <Link>rss_2.0.Channel.textInput.Link</Link>
         </textInput>
         <skipHours>
             <hours>0</hours>
@@ -114,11 +114,11 @@ var rssV2_0_Data = `
           <day>Saturday</day>
           <day>Sunday</day>
         </skipdays>
-        <cloud domain="rss_2.0.channel.cloud^domain" port="100" path="rss_2.0.channel.cloud^path"
-                registerProcedure="rss_2.0.channel.cloud^registerProcedure"
-                protocol="rss_2.0.channel.cloud^protocol"/>
+        <cloud domain="rss_2.0.Channel.cloud^domain" port="100" path="rss_2.0.Channel.cloud^path"
+                registerProcedure="rss_2.0.Channel.cloud^registerProcedure"
+                protocol="rss_2.0.Channel.cloud^protocol"/>
 
-    </channel>
+    </Channel>
 </rss>
 `
 
@@ -128,28 +128,28 @@ var rssV1_0_Data = `
          xmlns="http://purl.org/rss/1.0/"
          xmlns:dc="http://purl.org/dc/elements/1.1/">
 
-  <channel rdf:about="http://www.example.com">
-    <title>Example RSS 1.0 Feed</title>
-    <link>http://www.example.com</link>
+  <Channel rdf:about="http://www.example.com">
+    <Title>Example RSS 1.0 Feed</Title>
+    <Link>http://www.example.com</Link>
     <description>This is an example RSS 1.0 feed.</description>
-    <items>
+    <Items>
       <rdf:Seq>
         <rdf:li rdf:resource="http://www.example.com/item1"/>
         <rdf:li rdf:resource="http://www.example.com/item2"/>
       </rdf:Seq>
-    </items>
-  </channel>
+    </Items>
+  </Channel>
 
   <item rdf:about="http://www.example.com/item1">
-    <title>Item 1</title>
-    <link>http://www.example.com/item1</link>
+    <Title>Item 1</Title>
+    <Link>http://www.example.com/item1</Link>
     <description>This is the first item in the feed.</description>
     <dc:date>2023-12-01T12:00:00Z</dc:date>
   </item>
 
   <item rdf:about="http://www.example.com/item2">
-    <title>Item 2</title>
-    <link>http://www.example.com/item2</link>
+    <Title>Item 2</Title>
+    <Link>http://www.example.com/item2</Link>
     <description>This is the second item in the feed.</description>
     <dc:date>2023-12-01T13:30:00Z</dc:date>
   </item>
@@ -166,9 +166,9 @@ func TestRssV2_0(t *testing.T) {
 
 	parser := rssV2_0{}
 	feed := parser.Parse(doc.Root())
-	log.Println(feed.channel.title, " ", feed.channel.link)
-	for _, i := range feed.items {
-		log.Println(i.title, " ", i.link, " ", i.pubDate)
+	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
+	for _, i := range feed.Items {
+		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
 	}
 }
 
@@ -181,8 +181,8 @@ func TestRssV1_0(t *testing.T) {
 
 	parser := rssV1_0{}
 	feed := parser.Parse(doc.Root())
-	log.Println(feed.channel.title, " ", feed.channel.link)
-	for _, i := range feed.items {
-		log.Println(i.title, " ", i.link, " ", i.pubDate)
+	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
+	for _, i := range feed.Items {
+		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
 	}
 }

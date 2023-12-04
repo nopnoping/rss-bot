@@ -14,7 +14,7 @@ func parseFeed(data []byte, format string) *parse.FeedInfo {
 	case "xml":
 		return parseXML(data)
 	case "json":
-		return nil
+		return parseJson(data)
 	default:
 		return nil
 	}
@@ -46,11 +46,11 @@ func parseXML(data []byte) *parse.FeedInfo {
 	case "feed":
 		for _, attr := range root.Attr {
 			if attr.Key == "version" {
-				key = "feed-" + attr.Value
+				key = "atom-" + attr.Value
 				break
 			}
 			if attr.Key == "xmlns" && attr.Value == "http://www.w3.org/2005/Atom" {
-				key = "feed-1.0"
+				key = "atom-1.0"
 			}
 		}
 	case "rss":
@@ -72,4 +72,8 @@ func parseXML(data []byte) *parse.FeedInfo {
 		return nil
 	}
 	return p.Parse(root)
+}
+
+func parseJson(data []byte) *parse.FeedInfo {
+	return nil
 }
