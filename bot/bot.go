@@ -26,7 +26,7 @@ func NewBot() *Bot {
 	}
 	return &Bot{
 		botClient: b,
-		msgCh:     make(chan *PushMsg),
+		msgCh:     make(chan *PushMsg, 30),
 	}
 }
 
