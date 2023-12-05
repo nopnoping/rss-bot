@@ -11,12 +11,12 @@ import (
 )
 
 type PushTask struct {
-	msgCh chan bot.PushMsg
+	msgCh chan *bot.PushMsg
 	wg    sync.WaitGroup
 }
 
-func NewPushTask() *PushTask {
-	return &PushTask{}
+func NewPushTask(msgCh chan *bot.PushMsg) *PushTask {
+	return &PushTask{msgCh: msgCh}
 }
 
 func (p *PushTask) Start() {
@@ -40,7 +40,7 @@ func (p *PushTask) Start() {
 						}
 						feed.Items = items
 
-						p.msgCh <- bot.PushMsg{TwitterId: user.TwitterId, Info: feed}
+						p.msgCh <- &bot.PushMsg{TwitterId: user.TwitterId, Info: feed}
 						user.PrevSendTime = time.Now().Unix()
 					}
 				}(user)
