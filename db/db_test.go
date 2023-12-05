@@ -28,12 +28,12 @@ func TestDb(t *testing.T) {
 	}
 
 	user1 := &User{
-		TwitterId: "123131",
+		TwitterId: 123131,
 		Url:       "www.luexp.com",
 		TaskId:    1,
 	}
 	user2 := &User{
-		TwitterId: "123131",
+		TwitterId: 123131,
 		Url:       "www.luexp.com",
 		TaskId:    2,
 	}
