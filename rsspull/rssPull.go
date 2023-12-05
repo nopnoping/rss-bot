@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"rssbot/rsspull/parse"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -29,6 +30,7 @@ func (r *RssPull) Pull(url string) *parse.FeedInfo {
 		log.Printf("Rss Pull get err:%v\n", err)
 		return nil
 	}
+
 	if strings.Contains(header.Get("Content-Type"), "json") || strings.HasSuffix(url, "json") {
 		if feed, err = parseFeed(body, "json"); err != nil {
 			log.Printf("parse json feed error:%v\n", err)
@@ -40,5 +42,17 @@ func (r *RssPull) Pull(url string) *parse.FeedInfo {
 			return nil
 		}
 	}
+
+	items := make([]*parse.FeedItem, 0)
+	for _, item := range feed.Items {
+		if t, err := time.Parse(time.RFC1123, item.PubDate); err == nil {
+			item.PubDate = strconv.FormatInt(t.Unix(), 10)
+			items = append(items, item)
+		} else {
+			log.Printf("parse date error. date:%s. err:%v\n", item.PubDate, err)
+		}
+	}
+	feed.Items = items
+
 	return feed
 }
