@@ -3,7 +3,6 @@ package rsspull
 import (
 	"log"
 	"testing"
-	"time"
 )
 
 func TestAtomPull(t *testing.T) {
@@ -22,10 +21,4 @@ func TestRSSPull(t *testing.T) {
 	for _, i := range feed.Items {
 		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
 	}
-}
-
-func TestTime(t *testing.T) {
-	date := "Mon, 04 Dec 2023 07:02:27 +0000"
-	parse, _ := time.Parse(time.RFC1123, date)
-	log.Println(parse.Unix())
 }

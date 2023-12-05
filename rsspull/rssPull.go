@@ -23,6 +23,8 @@ func NewRssPull() *RssPull {
 	}
 }
 
+var DefaultRssPull = NewRssPull()
+
 func (r *RssPull) Pull(url string) *parse.FeedInfo {
 	var feed *parse.FeedInfo
 	body, header, err := r.client.get(url)
