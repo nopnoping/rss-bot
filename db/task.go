@@ -9,3 +9,13 @@ type Task struct {
 func CreateTask(task *Task) {
 	db.Create(task)
 }
+
+func GetTasksByTime(time int64) []*Task {
+	task := make([]*Task, 0)
+	db.Where("start_time <= ?", time).Find(&task)
+	return task
+}
+
+func UpdateTask(task []*Task) {
+	db.Save(&task)
+}

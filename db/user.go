@@ -10,3 +10,9 @@ type User struct {
 func CreateUser(user *User) {
 	db.Create(user)
 }
+
+func GetUsersByTaskIds(taskIds []uint) []*User {
+	users := make([]*User, 0)
+	db.Where("task_id IN ?", taskIds).Find(&users)
+	return users
+}
