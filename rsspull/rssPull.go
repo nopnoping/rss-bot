@@ -9,6 +9,7 @@ import (
 	"rssbot/rsspull/parse"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -51,8 +52,6 @@ func NewRssPull() *RssPull {
 	}
 }
 
-var DefaultRssPull = NewRssPull()
-
 func (r *RssPull) Pull(url string) *parse.FeedInfo {
 	var feed *parse.FeedInfo
 	body, header, err := r.client.get(url)
@@ -88,4 +87,14 @@ itemLoops:
 	feed.Items = items
 
 	return feed
+}
+
+var once sync.Once
+var defaultRssPull *RssPull
+
+func GetDefaultRssPull() *RssPull {
+	once.Do(func() {
+		defaultRssPull = NewRssPull()
+	})
+	return defaultRssPull
 }

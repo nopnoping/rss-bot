@@ -84,6 +84,11 @@ func (b *Bot) Start() {
 }
 
 func (b *Bot) handlePush(pMsg *pushtask.PushMsg) {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Printf("handlePush occur err:%v\n", r)
+		}
+	}()
 	var sb strings.Builder
 	sb.WriteString(fmt.Sprintln(pMsg.Info.Channel.Title))
 
@@ -100,6 +105,11 @@ func (b *Bot) handlePush(pMsg *pushtask.PushMsg) {
 }
 
 func (b *Bot) handleReq(rMsg tgbotapi.Update) {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Printf("handleReq occur err:%v\n", r)
+		}
+	}()
 	txt := rMsg.Message.Text
 	if len(txt) == 0 {
 		return

@@ -5,24 +5,30 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"rssbot/config"
+	"sync"
 	"time"
 )
 
+var once sync.Once
 var database *gorm.DB
 
-func init() {
-	var err error
-	if database, err = gorm.Open(sqlite.Open(config.DbPath), &gorm.Config{}); err != nil {
-		log.Fatalf("database connect err:%v\n", err)
-	}
+func DB() *gorm.DB {
+	once.Do(func() {
+		var err error
+		if database, err = gorm.Open(sqlite.Open(config.DbPath), &gorm.Config{}); err != nil {
+			log.Fatalf("database connect err:%v\n", err)
+		}
 
-	if err = database.AutoMigrate(&Task{}); err != nil {
-		log.Fatalf("automigrate task table err:%v\n", err)
-	}
+		if err = database.AutoMigrate(&Task{}); err != nil {
+			log.Fatalf("automigrate task table err:%v\n", err)
+		}
 
-	if err = database.AutoMigrate(&User{}); err != nil {
-		log.Fatalf("automigrate user table err:%v\n", err)
-	}
+		if err = database.AutoMigrate(&User{}); err != nil {
+			log.Fatalf("automigrate user table err:%v\n", err)
+		}
+	})
+
+	return database
 }
 
 func GetCurrentCanPullUserAndUpdateTask() []*User {

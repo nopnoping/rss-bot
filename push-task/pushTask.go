@@ -1,6 +1,7 @@
 package push_task
 
 import (
+	"fmt"
 	"log"
 	"rssbot/config"
 	"rssbot/db"
@@ -50,9 +51,14 @@ func (p *PushTask) Start() {
 			for _, user := range users {
 				p.wg.Add(1)
 				go func(user *db.User) {
+					defer func() {
+						if r := recover(); r != nil {
+							fmt.Printf("push task handle pull err:%v\n", r)
+						}
+					}()
 					defer p.wg.Done()
 
-					if feed := rsspull.DefaultRssPull.Pull(user.Url); feed != nil {
+					if feed := rsspull.GetDefaultRssPull().Pull(user.Url); feed != nil {
 
 						items := make([]*parse.FeedItem, 0)
 						for _, item := range feed.Items {

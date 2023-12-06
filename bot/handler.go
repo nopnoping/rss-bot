@@ -27,7 +27,7 @@ func (b *Bot) _sub(rMsg tgbotapi.Update) {
 		text = "has subscribed!"
 	} else {
 		url := words[1]
-		if feed := rsspull.DefaultRssPull.Pull(url); feed == nil {
+		if feed := rsspull.GetDefaultRssPull().Pull(url); feed == nil {
 			text = "can't pull the url"
 		} else {
 			text = fmt.Sprintf("subscribe %s success!", feed.Channel.Title)
