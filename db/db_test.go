@@ -28,14 +28,14 @@ func TestDb(t *testing.T) {
 	}
 
 	user1 := &User{
-		TwitterId: 123131,
-		Url:       "www.luexp.com",
-		TaskId:    1,
+		ChatId: 123131,
+		Url:    "www.luexp.com",
+		TaskId: 1,
 	}
 	user2 := &User{
-		TwitterId: 123131,
-		Url:       "www.luexp.com",
-		TaskId:    2,
+		ChatId: 123131,
+		Url:    "www.luexp.com",
+		TaskId: 2,
 	}
 	Db.Create(task1)
 	Db.Create(task2)
