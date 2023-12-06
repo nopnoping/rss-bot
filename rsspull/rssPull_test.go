@@ -7,7 +7,7 @@ import (
 
 func TestAtomPull(t *testing.T) {
 	pull := NewRssPull()
-	feed := pull.Pull("https://www.ruanyifeng.com/blog/atom.xml")
+	feed := pull.Pull("https://droidyue.com/atom.xml")
 	log.Println(feed.Channel.Title, " ", feed.Channel.Link)
 	for _, i := range feed.Items {
 		log.Println(i.Title, " ", i.Link, " ", i.PubDate)
