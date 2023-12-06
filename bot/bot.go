@@ -5,17 +5,11 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"log"
 	pushtask "rssbot/push-task"
-	"rssbot/rsspull/parse"
 )
 
 type Bot struct {
 	botClient *tgbotapi.BotAPI
-	msgCh     chan *PushMsg
-}
-
-type PushMsg struct {
-	TwitterId int64
-	Info      *parse.FeedInfo
+	msgCh     chan *pushtask.PushMsg
 }
 
 func NewBot() *Bot {
@@ -26,7 +20,7 @@ func NewBot() *Bot {
 	}
 	return &Bot{
 		botClient: b,
-		msgCh:     make(chan *PushMsg, 30),
+		msgCh:     make(chan *pushtask.PushMsg, 30),
 	}
 }
 
