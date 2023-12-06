@@ -61,6 +61,7 @@ func (b *Bot) Stop() {
 }
 
 func (b *Bot) Start() {
+	log.Println("bot start.......")
 	pushTask := pushtask.NewPushTask(b.msgCh)
 	go pushTask.Start()
 

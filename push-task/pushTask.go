@@ -35,6 +35,7 @@ func (p *PushTask) Close() {
 }
 
 func (p *PushTask) Start() {
+	log.Println("push task start......")
 	tick := time.Tick(config.PushTaskPeriod)
 
 	for {
@@ -43,6 +44,7 @@ func (p *PushTask) Start() {
 			log.Println("push task shutdown!")
 			return
 		case <-tick:
+			log.Println("push task kick a tick......")
 			users := db.GetCurrentCanPullUserAndUpdateTask()
 			if users == nil {
 				break
