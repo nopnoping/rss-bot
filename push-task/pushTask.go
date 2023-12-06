@@ -18,8 +18,8 @@ type PushTask struct {
 }
 
 type PushMsg struct {
-	TwitterId int64
-	Info      *parse.FeedInfo
+	ChatId int64
+	Info   *parse.FeedInfo
 }
 
 func NewPushTask(msgCh chan *PushMsg) *PushTask {
@@ -61,7 +61,7 @@ func (p *PushTask) Start() {
 						feed.Items = items
 
 						if len(feed.Items) > 0 {
-							p.msgCh <- &PushMsg{TwitterId: user.TwitterId, Info: feed}
+							p.msgCh <- &PushMsg{ChatId: user.ChatId, Info: feed}
 						}
 					}
 

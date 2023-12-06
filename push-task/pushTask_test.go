@@ -20,7 +20,7 @@ func dbInit() {
 	db.CreateTask(t)
 
 	u := &db.User{
-		TwitterId:    111,
+		ChatId:       111,
 		Url:          "https://www.ruanyifeng.com/blog/atom.xml",
 		TaskId:       1,
 		PrevPullTime: 0,
@@ -45,7 +45,7 @@ func TestDb(t *testing.T) {
 			time.Sleep(1 * time.Second)
 			return
 		case msg := <-ch:
-			t.Log(msg.TwitterId)
+			t.Log(msg.ChatId)
 			t.Log(msg.Info.Channel.Title, msg.Info.Channel.Title)
 			for _, i := range msg.Info.Items {
 				t.Log(i.Title, i.Link, i.PubDate)
