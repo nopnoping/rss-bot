@@ -9,6 +9,13 @@ import (
 	"time"
 )
 
+var timeFormat = []string{
+	"Mon, 02 Jan 2006 15:04:05 MST",
+	"2006-01-02T15:04:05Z",
+	"02 Jan 06 15:04 MST",
+	"Mon, 02 Jan 2006 15:04:05",
+}
+
 type RssPull struct {
 	client *rssClient
 }
@@ -46,13 +53,16 @@ func (r *RssPull) Pull(url string) *parse.FeedInfo {
 	}
 
 	items := make([]*parse.FeedItem, 0)
+itemLoops:
 	for _, item := range feed.Items {
-		if t, err := time.Parse(time.RFC1123, item.PubDate); err == nil {
-			item.PubDate = strconv.FormatInt(t.Unix(), 10)
-			items = append(items, item)
-		} else {
-			log.Printf("parse date error. date:%s. err:%v\n", item.PubDate, err)
+		for _, f := range timeFormat {
+			if t, err := time.Parse(f, item.PubDate); err == nil {
+				item.PubDate = strconv.FormatInt(t.Unix(), 10)
+				items = append(items, item)
+				continue itemLoops
+			}
 		}
+		log.Printf("unsupported date format. date:%s.\n", item.PubDate)
 	}
 	feed.Items = items
 
