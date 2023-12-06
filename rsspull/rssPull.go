@@ -13,14 +13,6 @@ import (
 	"time"
 )
 
-var timeFormat = []string{
-	"Mon, 02 Jan 2006 15:04:05 MST",
-	"2006-01-02T15:04:05Z",
-	"02 Jan 06 15:04 MST",
-	"Mon, 02 Jan 2006 15:04:05",
-	time.RFC3339,
-}
-
 type RssPull struct {
 	client *rssClient
 }
