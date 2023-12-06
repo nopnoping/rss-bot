@@ -2,6 +2,7 @@ package push_task
 
 import (
 	"rssbot/db"
+	"runtime"
 	"testing"
 	"time"
 )
@@ -28,13 +29,14 @@ func dbInit() {
 }
 
 func TestDb(t *testing.T) {
-	//runtime.GOMAXPROCS(1)
+	runtime.GOMAXPROCS(1)
 	dbInit()
+	db.Db.Debug()
 	ch := make(chan *PushMsg)
 	push := NewPushTask(ch)
 	go push.Start()
 
-	after := time.After(10 * time.Second)
+	after := time.After(20 * time.Second)
 
 	for {
 		select {

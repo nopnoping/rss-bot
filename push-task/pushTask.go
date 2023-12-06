@@ -41,6 +41,10 @@ func (p *PushTask) Start() {
 			return
 		case <-tick:
 			users := db.GetCurrentCanPullUserAndUpdateTask()
+			if users == nil {
+				break
+			}
+
 			for _, user := range users {
 				p.wg.Add(1)
 				go func(user *db.User) {
@@ -56,7 +60,9 @@ func (p *PushTask) Start() {
 						}
 						feed.Items = items
 
-						p.msgCh <- &PushMsg{TwitterId: user.TwitterId, Info: feed}
+						if len(feed.Items) > 0 {
+							p.msgCh <- &PushMsg{TwitterId: user.TwitterId, Info: feed}
+						}
 					}
 
 					user.PrevPullTime = time.Now().Unix()
