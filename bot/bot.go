@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"rssbot/config"
 	pushtask "rssbot/push-task"
 	"strings"
 	"sync"
@@ -18,29 +19,37 @@ type Bot struct {
 	stop      chan struct{}
 }
 
-var DefaultProxyUrl = "http://127.0.0.1:7890"
-
 func NewBot() *Bot {
-	proxyURL, err := url.Parse(DefaultProxyUrl)
-	if err != nil {
-		fmt.Println("Error parsing proxy URL:", err)
-		return nil
+	var botClient *tgbotapi.BotAPI
+	if config.BotProxyURL == "" {
+		var err error
+		botClient, err = tgbotapi.NewBotAPI(config.Token)
+		if err != nil {
+			log.Printf("connect bot err:%v\n", err)
+			return nil
+		}
+	} else {
+		proxyURL, err := url.Parse(config.BotProxyURL)
+		if err != nil {
+			fmt.Println("Error parsing proxy URL:", err)
+			return nil
+		}
+		client := &http.Client{
+			Transport: &http.Transport{
+				Proxy: http.ProxyURL(proxyURL),
+			},
+		}
+
+		botClient, err = tgbotapi.NewBotAPIWithClient(config.Token, client)
+		if err != nil {
+			log.Printf("connect bot err:%v\n", err)
+			return nil
+		}
 	}
 
-	client := &http.Client{
-		Transport: &http.Transport{
-			Proxy: http.ProxyURL(proxyURL),
-		},
-	}
-
-	b, err := tgbotapi.NewBotAPIWithClient("6807409395:AAFW90O-9G-1rPzhDv-q1ZsGUAYvBx9v74s", client)
-	if err != nil {
-		log.Printf("connect bot err:%v\n", err)
-		return nil
-	}
 	return &Bot{
-		botClient: b,
-		msgCh:     make(chan *pushtask.PushMsg, 30),
+		botClient: botClient,
+		msgCh:     make(chan *pushtask.PushMsg, config.BotPushChCap),
 		stop:      make(chan struct{}),
 	}
 }
@@ -56,8 +65,8 @@ func (b *Bot) Start() {
 	go pushTask.Start()
 
 	// 设置消息处理器
-	updateConfig := tgbotapi.NewUpdate(0)
-	updateConfig.Timeout = 60
+	updateConfig := tgbotapi.NewUpdate(config.BotUpdateOffset)
+	updateConfig.Timeout = config.BotUpdateTimeout
 
 	receive, _ := b.botClient.GetUpdatesChan(updateConfig)
 
@@ -84,6 +93,7 @@ func (b *Bot) handlePush(pMsg *pushtask.PushMsg) {
 
 	msg := tgbotapi.NewMessage(pMsg.ChatId, sb.String())
 	msg.ParseMode = "HTML"
+	msg.DisableWebPagePreview = true
 	if _, err := b.botClient.Send(msg); err != nil {
 		log.Printf("send handlePush reply err:%v\n", err)
 	}

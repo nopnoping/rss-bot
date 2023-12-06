@@ -15,6 +15,7 @@ func taskInit() {
 }
 
 func main() {
+	//config.BotProxyURL = ""
 	taskInit()
 
 	b := bot.NewBot()

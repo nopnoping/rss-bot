@@ -12,12 +12,12 @@ type User struct {
 }
 
 func CreateUser(user *User) {
-	Db.Create(user)
+	database.Create(user)
 }
 
 func GetUsersByTaskIds(taskIds []uint) []*User {
 	users := make([]*User, 0)
-	Db.Where("task_id IN ?", taskIds).Find(&users)
+	database.Where("task_id IN ?", taskIds).Find(&users)
 	return users
 }
 
@@ -26,22 +26,22 @@ func UpdateUsersPrevPullTime(user []*User) {
 		log.Println("UpdateUsersPrevPullTime get a empty parameter")
 		return
 	}
-	Db.Save(user)
+	database.Save(user)
 }
 
 func HasThisUrlWithTheChatId(chatId int64, url string) bool {
 	var num int64
-	Db.Model(&User{}).Where("chat_id = ?", chatId).Where("url = ?", url).Count(&num)
+	database.Model(&User{}).Where("chat_id = ?", chatId).Where("url = ?", url).Count(&num)
 	return num > 0
 }
 
 func DeleteUserByChaiIdAndUrl(chatId int64, url string) {
-	Db.Where("chat_id = ?", chatId).Where("url = ?", url).Delete(&User{})
+	database.Where("chat_id = ?", chatId).Where("url = ?", url).Delete(&User{})
 }
 
 func GetUserSubscribeUrls(chatId int64) []*User {
 	users := make([]*User, 0)
-	Db.Where("chat_id = ?", chatId).Find(&users)
+	database.Where("chat_id = ?", chatId).Find(&users)
 
 	return users
 }

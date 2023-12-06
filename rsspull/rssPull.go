@@ -1,8 +1,11 @@
 package rsspull
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"net/url"
+	"rssbot/config"
 	"rssbot/rsspull/parse"
 	"strconv"
 	"strings"
@@ -22,11 +25,28 @@ type RssPull struct {
 }
 
 func NewRssPull() *RssPull {
+	var c *http.Client
+	if config.RssClientProxyURL == "" {
+		c = &http.Client{
+			Timeout: config.RssClientTimeOut,
+		}
+	} else {
+		proxyURL, err := url.Parse(config.RssClientProxyURL)
+		if err != nil {
+			fmt.Println("Error parsing proxy URL:", err)
+			return nil
+		}
+		c = &http.Client{
+			Transport: &http.Transport{
+				Proxy: http.ProxyURL(proxyURL),
+			},
+			Timeout: config.RssClientTimeOut,
+		}
+	}
+
 	return &RssPull{
 		client: &rssClient{
-			client: &http.Client{
-				Timeout: time.Second,
-			},
+			client: c,
 		},
 	}
 }

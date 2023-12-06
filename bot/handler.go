@@ -89,6 +89,7 @@ func (b *Bot) _rss(rMsg tgbotapi.Update) {
 	msg := tgbotapi.NewMessage(rMsg.Message.Chat.ID, sb.String())
 	msg.ParseMode = "HTML"
 	msg.ReplyToMessageID = rMsg.Message.MessageID
+	msg.DisableWebPagePreview = true
 	if _, err := b.botClient.Send(msg); err != nil {
 		log.Printf("send _start reply err:%v\n", err)
 	}

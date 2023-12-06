@@ -9,12 +9,12 @@ type Task struct {
 }
 
 func CreateTask(task *Task) {
-	Db.Create(task)
+	database.Create(task)
 }
 
 func GetTasksByTime(time int64) []*Task {
 	task := make([]*Task, 0)
-	Db.Where("start_time <= ?", time).Find(&task)
+	database.Where("start_time <= ?", time).Find(&task)
 	return task
 }
 
@@ -23,5 +23,5 @@ func UpdateTask(task []*Task) {
 		log.Println("UpdateTask get a empty parameter")
 		return
 	}
-	Db.Save(&task)
+	database.Save(&task)
 }

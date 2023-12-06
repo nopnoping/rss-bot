@@ -2,6 +2,7 @@ package push_task
 
 import (
 	"log"
+	"rssbot/config"
 	"rssbot/db"
 	"rssbot/rsspull"
 	"rssbot/rsspull/parse"
@@ -33,8 +34,7 @@ func (p *PushTask) Close() {
 }
 
 func (p *PushTask) Start() {
-	//tick := time.Tick(time.Minute * 5)
-	tick := time.Tick(time.Second * 10)
+	tick := time.Tick(config.PushTaskPeriod)
 
 	for {
 		select {
