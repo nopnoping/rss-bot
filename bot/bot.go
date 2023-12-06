@@ -66,6 +66,7 @@ func (b *Bot) Start() {
 		case <-b.stop:
 			return
 		case pMsg := <-b.msgCh:
+			log.Printf("get pushMsg. title:%s.", pMsg.Info.Channel.Title)
 			go b.handlePush(pMsg)
 		case rMsg := <-receive:
 			go b.handleReq(rMsg)
@@ -74,7 +75,18 @@ func (b *Bot) Start() {
 }
 
 func (b *Bot) handlePush(pMsg *pushtask.PushMsg) {
+	var sb strings.Builder
+	sb.WriteString(fmt.Sprintln(pMsg.Info.Channel.Title))
 
+	for _, i := range pMsg.Info.Items {
+		sb.WriteString(fmt.Sprintf("<a href=\"%s\">%s</a>\n", i.Link, i.Title))
+	}
+
+	msg := tgbotapi.NewMessage(pMsg.ChatId, sb.String())
+	msg.ParseMode = "HTML"
+	if _, err := b.botClient.Send(msg); err != nil {
+		log.Printf("send handlePush reply err:%v\n", err)
+	}
 }
 
 func (b *Bot) handleReq(rMsg tgbotapi.Update) {
@@ -107,15 +119,4 @@ func (b *Bot) handleReq(rMsg tgbotapi.Update) {
 	default:
 		b._start(rMsg)
 	}
-	//if rMsg.Message != nil {
-	//	log.Printf("[%s] %s\n", rMsg.Message.From.UserName, rMsg.Message.Text)
-	//
-	//	msg := tgbotapi.NewMessage(rMsg.Message.Chat.ID, rMsg.Message.Text)
-	//	msg.ReplyToMessageID = rMsg.Message.MessageID
-	//
-	//	m, _ := b.botClient.Send(msg)
-	//	time.Sleep(time.Second)
-	//	eM := tgbotapi.NewEditMessageText(rMsg.Message.Chat.ID, m.MessageID, "Done")
-	//	b.botClient.Send(eM)
-	//}
 }

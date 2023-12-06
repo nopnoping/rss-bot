@@ -32,7 +32,8 @@ func GetCurrentCanPullUserAndUpdateTask() []*User {
 
 	taskIds := make([]uint, len(tasks))
 	for _, task := range tasks {
-		task.StartTime = time.Now().Unix() + int64((time.Duration)(task.Period)*5*60)
+		//task.StartTime = time.Now().Unix() + int64((time.Duration)(task.Period)*5*60)
+		task.StartTime = time.Now().Unix() + int64((time.Duration)(task.Period)*10)
 		taskIds = append(taskIds, task.TaskId)
 	}
 	UpdateTask(tasks)

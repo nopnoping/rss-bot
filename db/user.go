@@ -8,6 +8,7 @@ type User struct {
 	Url          string `gorm:"column:url"`
 	TaskId       uint   `gorm:"column:task_id"`
 	PrevPullTime int64  `gorm:"column:prev_send_time"`
+	Title        string `gorm:"column:title"`
 }
 
 func CreateUser(user *User) {
@@ -32,4 +33,15 @@ func HasThisUrlWithTheChatId(chatId int64, url string) bool {
 	var num int64
 	Db.Model(&User{}).Where("chat_id = ?", chatId).Where("url = ?", url).Count(&num)
 	return num > 0
+}
+
+func DeleteUserByChaiIdAndUrl(chatId int64, url string) {
+	Db.Where("chat_id = ?", chatId).Where("url = ?", url).Delete(&User{})
+}
+
+func GetUserSubscribeUrls(chatId int64) []*User {
+	users := make([]*User, 0)
+	Db.Where("chat_id = ?", chatId).Find(&users)
+
+	return users
 }

@@ -48,4 +48,6 @@ func TestBotConnect(t *testing.T) {
 func TestDb(t *testing.T) {
 	num := db.HasThisUrlWithTheChatId(5282246628, "https://droidyue.com/atom.xml")
 	fmt.Println(num)
+
+	db.DeleteUserByChaiIdAndUrl(5282246628, "https://droidyue.com/atom.xml")
 }

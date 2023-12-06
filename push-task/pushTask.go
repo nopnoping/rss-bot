@@ -33,7 +33,9 @@ func (p *PushTask) Close() {
 }
 
 func (p *PushTask) Start() {
-	tick := time.Tick(time.Minute * 5)
+	//tick := time.Tick(time.Minute * 5)
+	tick := time.Tick(time.Second * 10)
+
 	for {
 		select {
 		case <-p.shutdown:
