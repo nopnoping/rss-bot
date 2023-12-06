@@ -75,7 +75,7 @@ func (r *RssPull) Pull(url string) *parse.FeedInfo {
 	items := make([]*parse.FeedItem, 0)
 itemLoops:
 	for _, item := range feed.Items {
-		for _, f := range timeFormat {
+		for _, f := range config.RssTimeFormat {
 			if t, err := time.Parse(f, item.PubDate); err == nil {
 				item.PubDate = strconv.FormatInt(t.Unix(), 10)
 				items = append(items, item)
