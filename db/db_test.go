@@ -8,8 +8,8 @@ import (
 
 func dbInit() {
 	// clear
-	db.Where("1 = 1").Delete(&User{})
-	db.Where("1 = 1").Delete(&Task{})
+	Db.Where("1 = 1").Delete(&User{})
+	Db.Where("1 = 1").Delete(&Task{})
 }
 func TestDb(t *testing.T) {
 	dbInit()
@@ -37,10 +37,10 @@ func TestDb(t *testing.T) {
 		Url:       "www.luexp.com",
 		TaskId:    2,
 	}
-	db.Create(task1)
-	db.Create(task2)
-	db.Create(user1)
-	db.Create(user2)
+	Db.Create(task1)
+	Db.Create(task2)
+	Db.Create(user1)
+	Db.Create(user2)
 
 	u := GetCurrentCanPullUserAndUpdateTask()
 	for _, t := range u {
@@ -48,7 +48,7 @@ func TestDb(t *testing.T) {
 	}
 
 	tasks := make([]Task, 0)
-	db.Find(&tasks)
+	Db.Find(&tasks)
 	for _, task := range tasks {
 		log.Println(time.Unix(task.StartTime, 0).Format("2006-01-02 15:04:05"))
 	}
