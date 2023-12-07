@@ -18,13 +18,13 @@ func taskInit() {
 }
 
 func main() {
-	taskInit()
 	flag.StringVar(&config.RssClientProxyURL, "rssproxy", "", "rss client proxy url")
 	flag.StringVar(&config.Token, "token", "", "telegram bot token")
 	flag.StringVar(&config.BotProxyURL, "botproxy", "", "bot proxy url")
 	flag.StringVar(&config.DbPath, "db", "./rssbot.db", "sqlite db path")
-
 	flag.Parse()
+
+	taskInit()
 
 	if config.Token == "" {
 		log.Fatalf("token shoudn't be empty!")
