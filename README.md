@@ -35,10 +35,12 @@ rssbot -toen=<bot-token> -botproxy=<bot-proxy-url> -rssproxy=<rss-pull-proxy-url
 ## 文件结构
 
 - rss-bot
-  - `bot`
-  - `config`
-  - `db`
-  - `push-task`
-  - `rsspull`
-  - LICENSE
+  - `bot`:处理telegram bot的请求；发送rss订阅信息
+  - `config`:全局配置
+  - `db`:连接数据库；封装数据库操作
+  - `push-task`:定时获取rss信息
+  - `rsspull`:解析rss信息
   - go.mod
+  - LICENSE
+  - main.go
+  - README.md
