@@ -84,7 +84,7 @@ func (a atomV1_0) Parse(root *etree.Element) *FeedInfo {
 		item:       "entry",
 		itemTitle:  "title",
 		itemLink:   "link",
-		itemUpdate: "updated",
+		itemUpdate: "published",
 	}
 	return atomParseTemp(root, attr)
 }
