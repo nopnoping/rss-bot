@@ -90,6 +90,10 @@ func (b *Bot) handlePush(pMsg *pushtask.PushMsg) {
 			fmt.Printf("handlePush occur err:%v\n", r)
 		}
 	}()
+	if len(pMsg.Info.Items) == 0 {
+		return
+	}
+
 	var sb strings.Builder
 	sb.WriteString(fmt.Sprintln(pMsg.Info.Channel.Title))
 

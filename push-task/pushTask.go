@@ -71,17 +71,16 @@ func (p *PushTask) Start() {
 
 					if feed := rsspull.GetDefaultRssPull().Pull(url); feed != nil {
 						for _, user := range users {
-							items := make([]*parse.FeedItem, 0)
 							f := &parse.FeedInfo{
 								Channel: feed.Channel,
-								Items:   items,
+								Items:   make([]*parse.FeedItem, 0),
 							}
 							for _, item := range feed.Items {
 								if num, err := strconv.ParseInt(item.PubDate, 10, 64); err == nil && num >= user.PrevPullTime {
-									items = append(items, item)
+									f.Items = append(f.Items, item)
 								}
 							}
-							if len(items) > 0 {
+							if len(f.Items) > 0 {
 								p.msgCh <- &PushMsg{ChatId: user.ChatId, Info: f}
 							}
 						}
