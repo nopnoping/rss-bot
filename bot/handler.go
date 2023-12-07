@@ -34,7 +34,7 @@ func (b *Bot) _sub(rMsg tgbotapi.Update) {
 			user := &db.User{
 				ChatId:       rMsg.Message.Chat.ID,
 				Url:          url,
-				PrevPullTime: 0,
+				PrevSendTime: 0,
 				TaskId:       1,
 				Title:        feed.Channel.Title,
 			}

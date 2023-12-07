@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"rssbot/config"
+	"rssbot/db"
 	pushtask "rssbot/push-task"
 	"strings"
 	"sync"
@@ -101,11 +102,17 @@ func (b *Bot) handlePush(pMsg *pushtask.PushMsg) {
 		sb.WriteString(fmt.Sprintf("<a href=\"%s\">%s</a>\n", i.Link, i.Title))
 	}
 
-	msg := tgbotapi.NewMessage(pMsg.ChatId, sb.String())
+	msg := tgbotapi.NewMessage(pMsg.User.ChatId, sb.String())
 	msg.ParseMode = "HTML"
 	msg.DisableWebPagePreview = true
-	if _, err := b.botClient.Send(msg); err != nil {
-		log.Printf("send handlePush reply err:%v\n", err)
+
+	for try := 0; try <= config.BouPushTryCount; try++ {
+		_, err := b.botClient.Send(msg)
+		if err == nil {
+			db.UpdateUser(pMsg.User)
+			break
+		}
+		log.Printf("try[%d]send handlePush reply err:%v\n", try, err)
 	}
 }
 

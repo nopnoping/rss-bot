@@ -1,13 +1,11 @@
 package db
 
-import "log"
-
 type User struct {
 	Id           uint64 `gorm:"autoIncrement;primaryKey;"`
 	ChatId       int64  `gorm:"column:chat_id;"`
 	Url          string `gorm:"column:url"`
 	TaskId       uint   `gorm:"column:task_id"`
-	PrevPullTime int64  `gorm:"column:prev_send_time"`
+	PrevSendTime int64  `gorm:"column:prev_send_time"`
 	Title        string `gorm:"column:title"`
 }
 
@@ -21,11 +19,7 @@ func GetUsersByTaskIds(taskIds []uint) []*User {
 	return users
 }
 
-func UpdateUsersPrevPullTime(user []*User) {
-	if len(user) == 0 {
-		log.Println("UpdateUsersPrevPullTime get a empty parameter")
-		return
-	}
+func UpdateUser(user *User) {
 	DB().Save(user)
 }
 

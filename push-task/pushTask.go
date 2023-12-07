@@ -20,8 +20,8 @@ type PushTask struct {
 }
 
 type PushMsg struct {
-	ChatId int64
-	Info   *parse.FeedInfo
+	User *db.User
+	Info *parse.FeedInfo
 }
 
 func NewPushTask(msgCh chan *PushMsg) *PushTask {
@@ -76,24 +76,20 @@ func (p *PushTask) Start() {
 								Items:   make([]*parse.FeedItem, 0),
 							}
 							for _, item := range feed.Items {
-								if num, err := strconv.ParseInt(item.PubDate, 10, 64); err == nil && num >= user.PrevPullTime {
+								if num, err := strconv.ParseInt(item.PubDate, 10, 64); err == nil && num >= user.PrevSendTime {
 									f.Items = append(f.Items, item)
 								}
 							}
 							if len(f.Items) > 0 {
-								p.msgCh <- &PushMsg{ChatId: user.ChatId, Info: f}
+								user.PrevSendTime = time.Now().Unix()
+								p.msgCh <- &PushMsg{User: user, Info: f}
 							}
 						}
-					}
-
-					for _, user := range users {
-						user.PrevPullTime = time.Now().Unix()
 					}
 				}(url, users)
 			}
 			// save
 			p.wg.Wait()
-			db.UpdateUsersPrevPullTime(users)
 		}
 	}
 }

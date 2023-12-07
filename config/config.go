@@ -12,6 +12,7 @@ var PushTaskPeriod = 5 * time.Minute
 var TaskPeriodScale = PushTaskPeriod / time.Second
 
 var BotPushChCap = 20
+var BouPushTryCount = 3
 var BotUpdateOffset = 0
 var BotUpdateTimeout = 60
 var RssTimeFormat = []string{
